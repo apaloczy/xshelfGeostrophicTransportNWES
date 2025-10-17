@@ -12,6 +12,12 @@ To run the code on your machine, first clone the repository. Then create a mamba
 mamba env create -f environment.yml
 ```
 
+and
+
+```
+mamba activate xshelfNWES
+```
+
 ## Abstract
 
 Transport mechanisms between the deep ocean and adjacent continental shelf seas play an important role in the spatial distribution of nutrient delivery to the coastal ocean and in the temporal variability of shelf biogeochemical processes. Along the North West European Shelf (NWES) edge, nutrient-rich waters of oceanic origin are found below the mixed layer, representing a potential nutrient source for fueling new production on the shelf. We find persistent cross-isobath geostrophic transport across the NWES edge in hydrographic climatologies and altimetric sea surface height gradients. This transport is O(1 cm/s), has little vertical structure, and is onshore along the entire extent of the 200 m isobath, except along the southern rim of the Norwegian Trench. Despite strong temporal variability in the shelf-edge hydrography on seasonal to decadal timescales, changes in the ocean-shelf geostrophic transport are subtle. This is due to a persistent large-scale steric sea surface slope along the shelf edge. The geostrophic flow induces local depth-integrated cross-isobath nitrate fluxes of O(1-10 mmol/m/s). This is similar in magnitude to the winter wind-driven nitrate transport, but is much less variable at seasonal and inter-annual time scales. Variability in the geostrophic advection of nitrate is thus determined by the ocean-shelf nitrate gradient's variability, rather than by the cross-isobath flow's variability. Geostrophic transport may therefore be an important baseline component of the nutrient and carbon budgets on the NWES and other continental shelves, and should be considered in their long-term response to climate-scale forcing.
