@@ -1,0 +1,24 @@
+name: xshelfNWES
+channels:
+  - conda-forge
+dependencies:
+  - cartopy
+  - cmocean
+  - gsw
+  - hdf5storage
+  - ipdb
+  - ipympl
+  - ipython
+  - ipywidgets
+  - jupyterlab
+  - matplotlib
+  - netcdf4
+  - numpy
+  - pandas
+  - pip
+  - python=3
+  - scipy
+  - tqdm
+  - xarray
+  - bottleneck
+  - copernicusmarine
