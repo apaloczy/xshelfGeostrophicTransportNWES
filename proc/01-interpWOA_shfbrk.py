@@ -281,7 +281,7 @@ dsout = Dataset(dict(CT=Tis, SA=Sis, rho=Dis), coords=coords).sel(z=slice(0, -is
 # Calculate ug from geopotential anomaly.
 xx, zz, lat = dsout.x.values, dsout.z.values, dsout.lat.values
 g = grav(lat, 0)  # [m/s^2]
-f = fcor(lat)  # [1/s]
+f0 = fcor(lat)  # [1/s]
 
 PLOT_Phi_ug = True
 tls = coords["t"].values
@@ -291,7 +291,7 @@ for tl in tls:
 
     p = p_from_z(zz[:, np.newaxis], lat)
     Phi = geo_strf_dyn_height(SA, CT, p, p_ref=0)
-    ug = np.gradient(Phi, xx*1e3, axis=1)/f  # [m/s] geostrophic velocity *relative to sea surface*.
+    ug = np.gradient(Phi, xx*1e3, axis=1)/f0  # [m/s] geostrophic velocity *relative to sea surface*.
     uxis.append(ug)
 
     if PLOT_Phi_ug:
@@ -554,7 +554,7 @@ dsout = Dataset(dict(CT=Tis, SA=Sis, rho=Dis, N=Nis, Nse=Nseis), coords=coords).
 assert dsout.sizes["x"] == adt_ssnavg.sizes["x"], "Different along-isobath grid points"
 xx, zz, lat = dsout.x.values, dsout.z.values, dsout.lat.values
 g = grav(lat, 0)  # [m/s^2]
-f = fcor(lat)     # [1/s]
+f0 = fcor(lat)    # [1/s]
 
 # plt.close("all")
 
@@ -571,8 +571,8 @@ for ssn in ssns:
     p = p_from_z(zz[:, np.newaxis], lat)
 
     Phi = geo_strf_dyn_height(SA, CT, p, p_ref=0)
-    ugbc = np.gradient(Phi, xx*1e3, axis=1)/f  # [m/s]
-    ug0 =  - g*np.gradient(adt, xx*1e3)/f # Surface geostrophic velocity [m/s].
+    ugbc = np.gradient(Phi, xx*1e3, axis=1)/f0  # [m/s]
+    ug0 =  - g*np.gradient(adt, xx*1e3)/f0 # Surface geostrophic velocity [m/s].
     ug = ugbc + ug0 # Absolute geostrophic velocity [m/s].
     uxis.append(ug)
 
