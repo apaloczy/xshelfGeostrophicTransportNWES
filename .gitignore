@@ -1,3 +1,7 @@
 *.ipynb_checkpoints*
-*.nc
+data/srtm15p/SRTM15_V2.7.nc
+data/woa23/*.nc
+data/nsbc/*.nc
+data/nsbc/level2/climatological_monthly_mean/*.nc
+data/nsbc/level3/all_data_mean/*.nc
 *.npz
