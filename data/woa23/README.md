@@ -1,7 +1,7 @@
 WOA23
 -----
 
-The World Ocean Atlas 2023 (WOA23) climatology files should be placed in this directory.
+The World Ocean Atlas 2023 (WOA23, available at [https://www.ncei.noaa.gov/access/world-ocean-atlas-2023](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023)) climatology files should be placed in this directory.
 
 The python scripts in this directory download and subset the relevant WOA23 fields:
 
