@@ -5,7 +5,7 @@ The North Sea Biogeochemical Climatology (NSBC) files should be placed in this d
 
 The subdirectory `level2/climatological_monthly_mean` contains the profile data, while the subdirectory `level3/all_data_mean/` contains the objectively-mapped (gridded) fields.
 
-After downloading the files, the this directory should contain four files:
+After downloading the files, this directory should contain four files:
 
 * `level2/climatological_monthly_mean/NSBC_Level2_nitrate__UHAM_ICDC__v1.1__0.25x0.25deg__1960_2014.nc`
 * `level2/climatological_monthly_mean/NSBC_Level2_salinity__UHAM_ICDC__v1.1__0.25x0.25deg__1960_2014.nc`
