@@ -32,5 +32,4 @@ for f in fnames:
 
     ds.close()
     cmd = "rm " + f
-    # _ = system(cmd) # Delete netCDF file.
-    # _ = system(cmd.replace(".nc", ".zip")) # Delete .zip file.
+    _ = system(cmd) # Delete parent netCDF file.

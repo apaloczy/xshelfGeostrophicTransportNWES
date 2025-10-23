@@ -2,6 +2,7 @@ import numpy as np
 from xarray import open_dataset, Variable, Coordinates, DataArray, Dataset, concat
 from gsw import SA_from_SP, CT_from_pt, p_from_z
 from glob import glob
+from os import system
 
 #---
 fout_all = "en4profiles-NWES_all.nc"
@@ -80,5 +81,9 @@ for f in fnames:
         else:
             dsall = concat((dsall, dsio), dim="n")
         Nprof += 1
+
+    ds.close()
+    cmd = "rm " + f
+    _ = system(cmd) # Delete parent netCDF file.
 
 dsall.to_netcdf(fout_all)

@@ -1,5 +1,6 @@
 *.ipynb_checkpoints*
 data/srtm15p/SRTM15_V2.7.nc
+data/en4/*.zip
 data/en4/*.nc
 data/woa23/*.nc
 data/nsbc/*.nc
