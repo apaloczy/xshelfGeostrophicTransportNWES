@@ -2,17 +2,17 @@
 
 This repository contains code for a manuscript titled **"Persistent ocean-shelf transport across the North West European Shelf edge"**, by A. Palóczy, J. Hopkins, A. Wise, J. Huthnance, submitted to the Journal of Geophysical Research: Oceans. This [Jupyter notebook](https://github.com/apaloczy/xshelfGeostrophicTransportNWES/blob/main/index.ipynb) provides an overview of the contents.
 
-The directory `plot_figs/` contains Jupyter notebooks used to produce the figures in the manuscript (Figures 1-7), and the vector graphic file for Figure 8. These notebooks depend on the data files in the `data/` directory. Scripts to generate derived data files are in the `proc/` directory.
+The directory `plot_figs/` contains Jupyter notebooks used to produce the figures in the manuscript (Figures 1-7), and the vector graphic file for Figure 8. These notebooks depend on the data files in the `data/` and `proc/` directories. Scripts to generate derived data files are in the `proc/` directory.
 
 ## Python environment
 
-To run the code on your machine, first clone the repository. Then create a mamba/conda environment from the `environment.yml` file:
+To run the code on your machine, first clone the repository. Then create a python environment from the `environment.yml` file (using _e.g._, `mamba`):
 
 ```
 mamba env create -f environment.yml
 ```
 
-and
+and activate the environment:
 
 ```
 mamba activate xshelfNWES
