@@ -221,33 +221,20 @@ latmin, latmax = 44, 63
 plt.close("all")
 
 GLOBAL_DENSINV_TEST = True # Whether to apply the full-profile rejection criterion based on a large density inversion threshold.
-# 0.03 kg/m3 per 20 db = 0.015 kg/m3 per 10 db.
-# density_inversion_threshold = -0.015 # [kg/m3]
-# density_inversion_threshold = -0.005 # [kg/m3]
 
 density_inversion_threshold = -0.03 # [kg/m3]
-dzi_density_inversion_test = 20 #10 # [dbar]
-
-density_inversion_threshold2 = -0.001#-0.0075 # [kg/m3] over 5 dbar spacings. (For reference, -0.03 kg/m3 over 20 dbar is -0.0075 kg/m3 over 5 dbar).
-
-# Whether to interpolate over remaining density inversions smaller than
-# the threshold for full profile rejection.
-
-INTERPOLATE_OVER_DENSITYINVERSIONS = False
+dzi_density_inversion_test = 20 # [dbar]
 
 SORT_DENS_PROFILES = True # Whether to apply density sorting in the vertical.
 PLOT_RANDOM_PROFILES_SORT_DENS = False
 
 EXTRAPNN_SURFACE = True # Whether to extrapolate shallowest valid data point to the surface.
-znearsurf = 10 # [m] Deepest depth from which to extrapolate to the surface if all depths above are NaN.
-
+ANISOTROPIC_BIN = True
 DISTANCE_WEIGHTING = True
 
-ANISOTROPIC_BIN = True
-# lr = 50#100 # [km] Fixed Gaussian length scale for distance weighting.
-gaussr_frac = 0.1#0.01 # Fraction of maximum weight at the edge of the strip.
-
-maxdy_initial = 100#200 #300 # Initial along-isobath search distance [km]
+znearsurf = 10 # [m] Deepest depth from which to extrapolate to the surface if all depths above are NaN.
+gaussr_frac = 0.1 # Fraction of maximum weight at the edge of the strip.
+maxdy_initial = 100 # Initial along-isobath search distance [km]
 
 # maxdx = 50 # Cross-isobath search distance [km]
 maxdx = [2, 8] # Left-right cross-isobath search distance [km]
@@ -257,11 +244,9 @@ PLOT_BINAVGMAPS = False
 SAVEFIG_BINAVGMAPS = False
 
 nprofsin_min = 5 # Minimum number of profiles in each polygon to calculate a spatial average.
-nprofsin_max = 1e30 # Maximum number of profiles in each polygon to calculate a spatial average. ***NOTE: Does not usually help with discontinuities. Best to only limit the minimum profile name.
+nprofsin_max = 1e30 # Maximum number of profiles in each polygon to calculate a spatial average.
 
-VERBOSE_SMALL_DENSITYINVERSIONS = False
-PLOT_RANDOM_PROFILES_INTERP_DENSITYINVERSIONS = False
-nrand_plot_densinv = 500 # On average, every nrand_plot_densinv-th corrected profile is plotted. Entering 100 gives a 1% chance for each profile
+nrand_plot_densinv = 500 # On average, every nrand_plot_densinv-th corrected profile is plotted.
 max_rand_plots = 10
 
 if asymmetrical:
@@ -270,11 +255,11 @@ else:
     dy_min = maxdx*2
 
 dy_max = maxdy_initial*3 # [km]
-maxdy_increment = 50     # Incremental along-isobath search distance [km]. Should be larger than 'binlen' (binlen = 20 km)
+maxdy_increment = 50     # Incremental along-isobath search distance [km]. Should be larger than 'binlen'.
 
 ming = 3                   # Minimum number of data points across all profiles in average to consider that depth in the spatial average
 dllbin0 = 2*dy_max/111.120 # Meridional width of bbox for initial subset along each isobath point [degrees]
-nstd_thresh = 5            # Maxium number of standard deviations (to filter out outliers)
+nstd_thresh = 5            # Maximum number of standard deviations (to filter out outliers)
 
 f = "../data/en4/en4profiles-NWES_all.nc"
 fbathymetry = "../data/srtm15p/SRTM15_V2.7.nc"
@@ -310,7 +295,6 @@ xipm_clip = 0.5*(xip_clip[1:] + xip_clip[:-1])
 yipm_clip = 0.5*(yip_clip[1:] + yip_clip[:-1])
 
 #---
-
 xim, yim, angs = angle_isobath(xi, yi)
 di = np.append(0, np.cumsum(distance(xim, yim)))*1e-3 # [km]
 dxi = np.median(np.diff(di))
@@ -327,30 +311,6 @@ dmonths = dict(JFM=[1, 2, 3], AMJ=[4, 5, 6], JAS=[7, 8, 9], OND=[10, 11, 12], an
 nt = len(ssns)
 fout = "alongisob_seasonal_EN4_%dm.nc"%iso
 headout_figs_binavgmap = "figs_alongisobclim_bins_seasonal/"
-
-if GLOBAL_DENSINV_TEST:
-    fout = fout.replace(".nc", "_densinv_profile_reject_step.nc")
-else:
-    fout = fout.replace(".nc", "_no_densinv_profile_reject_step.nc")
-
-if INTERPOLATE_OVER_DENSITYINVERSIONS:
-    fout = fout.replace(".nc", "_interpolated_over_densinv.nc")
-else:
-    fout = fout.replace(".nc", "not_interpolated_over_densinv.nc")
-
-if SORT_DENS_PROFILES:
-    fout = fout.replace(".nc", "_dens-sorted.nc")
-else:
-    fout = fout.replace(".nc", "_not-dens-sorted.nc")
-
-if DISTANCE_WEIGHTING:
-    gaussr_frac_str = str(gaussr_frac).replace(".", "p")
-    fout = fout.replace(".nc", "_distanceweighting_gaussr_frac%s.nc"%gaussr_frac_str)
-else:
-    fout = fout.replace(".nc", "_nodistanceweighting.nc")
-
-if ANISOTROPIC_BIN:
-    fout = fout.replace(".nc", "_Lxl%dkm-Lxr%dkm_Ly%dkm.nc"%(maxdx[0], maxdx[1], maxdy_initial))
 
 xseg0, yseg0 = np.loadtxt("segment_latitudes_wei_etal2024.txt", unpack=True)
 fseg = [near2(xim, yim, xseg0[i], yseg0[i]) for i in range(len(yseg0))]
@@ -572,73 +532,6 @@ for i in range(ntt):
                 nnear -= badprofs_densinv
                 print("+++++ %d profiles (%1.1f%% of total) with density inversions > %1.2f kg/m3 rejected in this subset."%(badprofs_densinv, badprof_frac, density_inversion_threshold))
                 total_badprofs_densinv += badprofs_densinv
-
-        # Interpolate over any remaining density inversions (after profiles with major inversions were rejected).
-        if INTERPOLATE_OVER_DENSITYINVERSIONS:
-            dsin0 = dsin.copy()
-
-            total_profiles_requiring_interpolation = 0
-            for nn in range(nnear):
-                dsin_aux = dsin.isel(n=nn)
-
-                rhoaux = sigma0(dsin_aux["SA"], dsin_aux["CT"])
-                drhoaux = rhoaux.diff("z", label="upper")
-                fbad = drhoaux.values<density_inversion_threshold2
-                nbad = fbad.sum()
-                if nbad>0:
-                    total_profiles_requiring_interpolation += 1
-                    z_inversion = drhoaux.z.values[fbad]
-
-                    if VERBOSE_SMALL_DENSITYINVERSIONS:
-                        print("-+-+-+- Interpolating over %d values with density inversions smaller than %1.4f kg/m3"%(nbad, density_inversion_threshold2))
-                        print("Depth levels: %s m"%str(z_inversion))
-                        # plt.pause(0.05)
-
-                    CTaux, SAaux = dsin_aux["CT"].values, dsin_aux["SA"].values
-
-                    freplaces = []
-                    for mm in range(nbad):
-                        freplace = np.where(z0==z_inversion[mm])[0][0]
-                        CTaux[freplace] = np.nan
-                        SAaux[freplace] = np.nan
-                        freplaces.append(freplace)
-
-                    fgT = np.isfinite(CTaux)
-                    fgS = np.isfinite(SAaux)
-                    CT_inversion = np.interp(z_inversion, z0[fgT], CTaux[fgT])
-                    SA_inversion = np.interp(z_inversion, z0[fgS], SAaux[fgS])
-
-                    for mm, freplace in enumerate(freplaces):
-                        CTaux[freplace] = CT_inversion[mm]
-                        SAaux[freplace] = SA_inversion[mm]
-
-                    dsin["CT"].values[:, nn] = CTaux
-                    dsin["SA"].values[:, nn] = SAaux
-
-                    if PLOT_RANDOM_PROFILES_INTERP_DENSITYINVERSIONS:
-                        if np.random.randint(0, nrand_plot_densinv)==1:
-                            fig, axrand = plt.subplots()
-                            rhoaux.attrs["units"] = "kg/m3"
-                            rhoaux.attrs["long_name"] = "Potential density"
-                            rhoaux_interp = rhoaux.copy()
-                            rhoaux_interp.values = sigma0(dsin["SA"].values[:, nn], dsin["CT"].values[:, nn])
-                            rhoaux.plot(ax=axrand, y="z", yincrease=False)
-                            rhoaux_interp.plot(ax=axrand, y="z", yincrease=False)
-                            finterp = rhoaux.values != rhoaux_interp.values
-                            rhoaux_interp[finterp].plot(ax=axrand, y="z", yincrease=False, linestyle="none", marker="o", ms=4, mfc="m", mec="m")
-                            axrand.axis("tight")
-                            axrand.text(0.01, 0.05, "Threshold = %1.4f kg/m3"%density_inversion_threshold2, transform=axrand.transAxes)
-                            rand_count += 1
-                            if rand_count>max_rand_plots:
-                                plt.show()
-                                _ = input("Press any key")
-
-            # Replace dsin profiles with updated profiles.
-            if VERBOSE_SMALL_DENSITYINVERSIONS:
-                frac = 100*total_profiles_requiring_interpolation/nnear
-                print("==========")
-                print("Number of profiles with at least one small density inversion: %d (%1.1f%% of total)"%(total_profiles_requiring_interpolation, frac))
-                print("==========")
 
         if SORT_DENS_PROFILES: # Use isntead of interpolating over density inversions. This assumes the overturns are due to local turbulence only.
             sig0_aux = sigma0(dsin["SA"], dsin["CT"])
@@ -866,10 +759,3 @@ uxis = DataArray(np.array(uxis)*1e2, dims=dims, coords=coords, attrs=dict(long_n
 dsisos["ug"] = uxis
 
 dsisos.to_netcdf(fout)
-
-if DISTANCE_WEIGHTING:
-    print("")
-    print("***Used Gaussian distance weighting for averaging***")
-    print("")
-
-# plt.show()
