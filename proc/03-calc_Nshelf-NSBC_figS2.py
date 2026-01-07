@@ -630,7 +630,7 @@ dfNobs_in = read_json(Nobs_fileout)
 
 
 ###################################################
-### Figure S1 (number of NSBC profiles per bin) ###
+### Figure S2 (number of NSBC profiles per bin) ###
 ###################################################
 
 
@@ -969,4 +969,4 @@ xy = np.array(
 xoff, yoff = 1.5, 1
 poly_avg_plot2(Nmean, Nstd, ssns, lons, lats, xis, yis, xy, axs, xoff, yoff, col="m")
 
-fig.savefig("../plot_figs/figS1.png", bbox_inches="tight")
+fig.savefig("../plot_figs/figS2.png", bbox_inches="tight")
