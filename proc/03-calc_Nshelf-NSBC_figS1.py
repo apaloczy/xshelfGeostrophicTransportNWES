@@ -724,7 +724,6 @@ cs14 = ax14.pcolormesh(x, y, Nnobs[ssn], vmin=nobsmin, vmax=nobsmax, cmap=cmap2)
 ax14.text(xtxt, ytxt, ssn, fontsize=18, fontweight="black", zorder=9, transform=ax14.transAxes)
 
 _ = [axi.plot(xi100, yi100, color="k", linewidth=3, zorder=20) for axi in axs]
-_ = [axi.plot(xi125, yi125, color="k", linewidth=3, zorder=20) for axi in axs]
 _ = [axi.plot(xi, yi, color="r", linewidth=3, zorder=20) for axi in axs]
 _ = [axi.plot(xseg, yseg, linestyle="none", marker="o", ms=6, mfc="w", mec="r", zorder=21) for axi in axs]
 
