@@ -174,9 +174,7 @@ msk200mshelf = np.expand_dims(msk200mshelf, 1)
 Nmean0, Nnobs0 = (ds["nitrate_mean"].where(msk200mshelf), ds["nitrate_noobs"].where(msk200mshelf))
 
 Nstd0 = ds["nitrate_stddev"].where(msk200mshelf)
-Smean0 = dsS["salinity_mean"].where(
-    msk200mshelf
-)  # For depth-mean salinity. Anywhere too fresh is masked out for the nitrate values.
+Smean0 = dsS["salinity_mean"].where(msk200mshelf)  # For depth-mean salinity. Anywhere too fresh is masked out for the nitrate values.
 fmsk = "../data/nsbc/NSBC_Level2_land_sea_mask__UHAM_ICDC__v1.1__0.25x0.25deg.nc"
 landmask0 = open_dataset(fmsk)["landmask"].sel(lon=slice(xmin, xmax), lat=slice(ymin, ymax), depth=slice(0, 200))
 
@@ -270,12 +268,12 @@ ccfmt = "%d"
 cmap = matter
 cmap2 = plt.cm.nipy_spectral
 cmap2.set_extremes(bad="w", under="w")
-cbax = [0.02, 0.02, 0.35, 0.03]
+cbax = [0.625, 0.15, 0.35, 0.03]
 cbname1 = r"N [mmol/m$^3$]"
 cbname2 = r"# obs."
 
 # Bin-averaged fields, number of observations per bin.
-xtxt, ytxt = 0.7, 0.1
+xtxt, ytxt = 0.7, 0.035
 
 ssn = "JFM"
 cs11 = ax11.pcolormesh(x, y, Nmean[ssn], vmin=vmi, vmax=vma, cmap=cmap)
@@ -321,8 +319,8 @@ xseg0, yseg0 = np.loadtxt("segment_latitudes_wei_etal2024.txt", unpack=True)
 fseg = [near2(xi, yi, xseg0[i], yseg0[i]) for i in range(len(yseg0))]
 xseg, yseg = xi[fseg], yi[fseg]
 
-_ = [axi.plot(xi100, yi100, color="k", linewidth=1, zorder=20) for axi in axs]
-_ = [axi.plot(xi125, yi125, color="k", linewidth=1, zorder=20) for axi in axs]
+_ = [axi.plot(xi100, yi100, color="b", linewidth=1, zorder=20) for axi in axs]
+_ = [axi.plot(xi125, yi125, color="b", linewidth=1, zorder=20) for axi in axs]
 _ = [axi.plot(xi, yi, color="r", linewidth=1.5, zorder=20) for axi in axs]
 _ = [axi.plot(xseg, yseg, linestyle="none", marker="o", ms=6, mfc="w", mec="r", zorder=21) for axi in axs]
 
@@ -723,7 +721,7 @@ ssn = "OND"
 cs14 = ax14.pcolormesh(x, y, Nnobs[ssn], vmin=nobsmin, vmax=nobsmax, cmap=cmap2)
 ax14.text(xtxt, ytxt, ssn, fontsize=18, fontweight="black", zorder=9, transform=ax14.transAxes)
 
-_ = [axi.plot(xi100, yi100, color="k", linewidth=3, zorder=20) for axi in axs]
+_ = [axi.plot(xi100, yi100, color="b", linewidth=3, zorder=20) for axi in axs]
 _ = [axi.plot(xi, yi, color="r", linewidth=3, zorder=20) for axi in axs]
 _ = [axi.plot(xseg, yseg, linestyle="none", marker="o", ms=6, mfc="w", mec="r", zorder=21) for axi in axs]
 
