@@ -1,5 +1,7 @@
 # xshelfGeostrophicTransportNWES
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18199136.svg)](https://doi.org/10.5281/zenodo.18199136)
+
 This repository contains code for a manuscript titled **"Persistent ocean-shelf transport across the North West European Shelf edge"**, by A. Palóczy, J. Hopkins, A. Wise, J. Huthnance, submitted to the Journal of Geophysical Research: Oceans. This [Jupyter notebook](https://github.com/apaloczy/xshelfGeostrophicTransportNWES/blob/main/index.ipynb) provides an overview of the contents.
 
 The directory `plot_figs/` contains Jupyter notebooks used to produce the figures in the manuscript (Figures 1-7), Figures S1 and S2, and the vector graphic file for Figure 8. These notebooks depend on the data files in the `data/` and `proc/` directories. Scripts to generate derived data files and Figures S1 and S2 are in the `proc/` directory.
